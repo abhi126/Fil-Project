@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Themefisher Icon font -->
+    <link rel="stylesheet" href="{% static 'home/plugins/themefisher-font.v-2/style.css' %}">
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="{% static 'home/plugins/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="{% static 'home/plugins/slick-carousel/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'home/plugins/slick-carousel/slick/slick-theme.css' %}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+<div class="row" style="margin-top:30px;">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-header"><center><h2>{{ name }} Price Prediction</h2></center></div>
+        <div class="card-body">
+          <div id="myPlot" style="width:100%;max-width:700px"></div>
+            <div>
+             <h5>R2 Score : <imp style="color:brown;">{{ r2_score }}</imp> </h5>
+              <h5>Mean Absolute Error: <imp style="color:brown;">{{ mae }}</imp> </h5>
+            <h5>Predicted {{ name }} Price for 5th day : <imp style="color:brown;">${{ pre }}</imp> </h5>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+var xArray = {{ data_list|safe }};
+var xArray1 = {{ pr|safe }};
+var yArray = {{ ac|safe }};
+
+// Define Data
+var data = [{
+  x: xArray,
+  y: yArray,
+  mode:"lines",
+  name:"Actual Price"
+},
+{
+  x: xArray,
+  y: xArray1,
+  mode:"lines",
+  name:"Predicted Price"
+},
+];
+
+// Define Layout
+var layout = {
+  xaxis: {title: "Time"},
+  yaxis: {title: "Price(in USD)"},
+};
+
+// Display using Plotly
+Plotly.newPlot("myPlot", data, layout);
+</script>
+
+<!-- 
+    Essential Scripts
+    =====================================-->
+
+    <!-- Main jQuery -->
+    <script src="{% static 'home/plugins/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'home/plugins/bootstrap/dist/js/popper.min.js' %}"></script>
+    <script src="{% static 'home/plugins/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Owl Carousel -->
+    <script src="{% static 'home/plugins/slick-carousel/slick/slick.min.js' %}"></script>
+    <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+    <!-- Smooth Scroll js -->
+    <script src="{% static 'home/plugins/smooth-scroll/dist/js/smooth-scroll.min.js' %}"></script>
+
+    <script src="{% static 'home/js/script.js' %}"></script>
+
+
+</body>
+</html>
