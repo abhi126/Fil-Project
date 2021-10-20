@@ -59,7 +59,7 @@ def cryptoprediction(name):
     print(data.columns)
     print(data['Date'].tail())
     l=list(data['Date'])
-    #data1.to_excel("E:\FIL-Project\CryptOS\home\data_bitc.xlsx")
+
     data2=data[0:int(len(data)*0.85)]
     scaler = MinMaxScaler(feature_range=(0,1))
     scaled_data = scaler.fit_transform(data2['Close'].values.reshape(-1,1))
