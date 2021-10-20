@@ -170,9 +170,19 @@ def home(request):
     return render(request, 'home.html', context)
 
 def prediction_data(request,name):
+    d=top_bar()
     ac,pr,date_list,pre,r2,mae=cryptoprediction(name);
     date_list=json.dumps(date_list[0:len(ac)])
-    return render(request,'prediction.html',context={"r2_score":r2,"mae":mae,"ac":ac,"pr":pr,"data_list":date_list,"pre":pre,"name":name})
+    d['r2_score']=r2;
+    d["mae"]=mae
+    d["ac"]=ac
+    d["pr"]=pr
+    d["data_list"]=date_list
+    d["pre"]=pre
+    d["name"]=name
+    end=dt.datetime.now();
+    d['predicted_date']=end+dt.timedelta(days=5)
+    return render(request,'prediction.html',d)
 
 def compare_crypto(request):
     d1={"Bitcoin":"BTC-USD","Ethereum":"ETH-USD",'Binance Coin':"BNB-USD",'Tether':"USDT-USD",'Cardano':"ADA-USD",'XRP':"XRP-USD",'Solana':"SOL1-USD",'Polkadot':"DOT1-USD",'Dogecoin':"DOGE-USD",'USD Coin':"USDC-USD"}

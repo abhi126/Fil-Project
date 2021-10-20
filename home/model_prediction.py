@@ -28,7 +28,7 @@ crypto_resolver={
                 'USD Coin':['usd','model_usd'],
                 'Solana':['solana','model_solana']
                 }
-
+                
 def cryptoprediction(name):
     if name in list(crypto_resolver):
         k=crypto_resolver[name]

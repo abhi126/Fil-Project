@@ -28,7 +28,7 @@
             <div>
              <h5>R2 Score : <imp style="color:brown;">{{ r2_score }}</imp> </h5>
               <h5>Mean Absolute Error: <imp style="color:brown;">{{ mae }}</imp> </h5>
-            <h5>Predicted {{ name }} Price for 5th day : <imp style="color:brown;">${{ pre }}</imp> </h5>
+            <h5>Predicted {{ name }} Price for {{ predicted_date|date }}: <imp style="color:brown;">${{ pre }}</imp> </h5>
             </div>
         </div>
       </div>
