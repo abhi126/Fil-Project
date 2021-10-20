@@ -21,7 +21,6 @@ secret_key = 'a7c56a7d23b9d78329b15106c743c9d0a5d33ad65d07771d31c4cffeb8d0d8beb9
 # create the client
 client = shrimpy.ShrimpyApiClient(public_key, secret_key)
 
-crypto_resolver={'Bitcoin':['data_bitc','model','model']}
 
 def plot_chart(sym):
     # get the candles
@@ -172,7 +171,6 @@ def home(request):
 
 def prediction_data(request,name):
     ac,pr,date_list,pre,r2,mae=cryptoprediction(name);
-    print(name)
     date_list=json.dumps(date_list[0:len(ac)])
     return render(request,'prediction.html',context={"r2_score":r2,"mae":mae,"ac":ac,"pr":pr,"data_list":date_list,"pre":pre,"name":name})
 
@@ -212,19 +210,13 @@ def compare_crypto(request):
                    yaxis_title='Price(in USD)')
         plot_div = plot(fig, output_type='div')
         d=top_bar()
-        # print(len(all_data))
         d["cryptos_list1"]=cryptos_list1+"Price Comparison"
         d["cryptos_list"]=list(d1)
         d['data']=all_data
-        # d['cryptos1']=len(all_data)
-        # t23=[]
-        # for i in l1:
-        #     i=str(i)
-        #     t23.append(i[0:10])
-        # d['date_list']=json.dumps(t23)
         d['plot_div']= plot_div
         return render(request,'compare_crypto.html',d)
     else:
         d=top_bar()
         d["cryptos_list"]=list(d1)
         return render(request,'compare_crypto.html',d)
+

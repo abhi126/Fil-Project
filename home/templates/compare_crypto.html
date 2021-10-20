@@ -44,7 +44,7 @@ $('select').selectpicker();
         <div class="row">
             <div class="col-lg-6 col-sm-6"><h6 style="float:right;">Select the CryptoCurrencies</h6></div>
             <div class="col-lg-6 col-sm-6">
-            <select class="selectpicker" multiple data-live-search="true" name="cryptos">
+            <select class="selectpicker" multiple data-live-search="true" name="cryptos" required>
             {% for i in cryptos_list %}
             <option value="{{ i }}">{{i}}</option>
             {% endfor %}

@@ -1,0 +1,62 @@
+
+*********************************************CoinzExpert Project*********************************************
+
+***************************************** Functions used are described below:*********************************
+
+1.cryptoprediction(name):
+    Parameters:
+        (i) name: name specifies the name of CryptoCurrency
+    Description:
+        This Function is used to train the model and predict the price of CryptoCurrency 5th day from now 
+
+2.plot_chart(sym):
+    Parameters:
+        (i) sym: sym specifies the symbol of CryptoCurrency
+    Description:
+        This Function plot the chart by using plotly library
+
+3.top_bar():
+    Description:
+        This Function is used to create the bar representing top 10 crypto prices(latest)
+
+4.get_news():
+    Description:
+        This Function is used to get latest CryptoCurrency News
+
+
+**********************************************Views Used:**********************************************************
+
+1.cal_con(request):
+    Description:
+        This Function is used to convert cryptocurrency to different currencies
+
+2.faq(request):
+    Description:
+        This Function is used to render frequently asked question template 
+
+3.guide(request):
+    Description:
+        This Function is used to render guide template 
+
+4.home(request):
+    Description:
+        This Function is used to render homepage template 
+
+5.prediction(request,name):
+    Parameters:
+        (i) name: name specifies the name of CryptoCurrency
+    Description:
+        This Function is used to render the analysis of model trained and predicted price for 5th day in 2.prediction
+        template 
+6.compare_crypto(request):
+    Description:
+        This Function is used to render the comparison of actual price of CryptoCurrencies in graphical form in compare_crypto template
+
+************************************************Files Stored:***********************************************
+
+    1.Excel files store the crytocurrency data from 2014 onwards of top 10 cryptocurrency
+    2.json files stores the trained model for top 10 cryptocurrency
+    3.h5 files stores the weight of deep learning model for top 10 currencies
+
+    
+
