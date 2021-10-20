@@ -51,7 +51,7 @@ def plot_chart(sym):
     fig = go.Figure(data=[go.Candlestick(x=dates,
                         open=open_data, high=high_data,
                         low=low_data, close=close_data)])
-    fig.update_layout(height = 600,width = 1800)
+    fig.update_layout(height = 600,width = 1100)
 
     # display our graph
     # fig.show()
