@@ -9,4 +9,5 @@ urlpatterns = [
     path('blog',views.blog, name='blog'),
     path('guide',views.guide, name='guide'),
     path('prediction/<str:name>',views.prediction_data, name='prediction'),
+    path('Compare-Crypto',views.compare_crypto, name='compare'),
 ]

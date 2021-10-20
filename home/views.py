@@ -6,6 +6,11 @@ import shrimpy
 import plotly.graph_objects as go
 from plotly.offline import plot
 import json
+import yfinance as yf
+import datetime as dt
+from django.shortcuts import render
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
 
 from .model_prediction import cryptoprediction
 
@@ -75,7 +80,14 @@ def top_bar():
 
     context = {'top_bar': barlist}
     return context
-
+def get_news():
+	# Grab Crypto Price Data
+        price_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,XRP,BCH,EOS,LTC,XLM,ADA,USDT,MIOTA,TRX&tsyms=USD")
+        price = json.loads(price_request.content)
+        # Grab Crypto News
+        api_request = requests.get("https://min-api.cryptocompare.com/data/v2/news/?lang=EN")
+        api = json.loads(api_request.content)
+        return api;
 
 
 def cal_con(request):
@@ -129,6 +141,8 @@ def faq(request):
 
 def blog(request):
     d = top_bar()  
+    p=get_news();
+    d['api']=p;
     return render(request, 'blog.html',d)
 
 def guide(request):
@@ -161,4 +175,56 @@ def prediction_data(request,name):
     print(name)
     date_list=json.dumps(date_list[0:len(ac)])
     return render(request,'prediction.html',context={"r2_score":r2,"mae":mae,"ac":ac,"pr":pr,"data_list":date_list,"pre":pre,"name":name})
-    
+
+def compare_crypto(request):
+    d1={"Bitcoin":"BTC-USD","Ethereum":"ETH-USD",'Tether':"USDT-USD"}
+    if request.method=="POST":
+        list1=request.POST.getlist('cryptos')
+        t_per=request.POST['t_period']
+        all_data={}
+        end=dt.datetime.now();
+        cryptos_list1=""
+        if(t_per=="1"):
+            start=end-dt.timedelta(days=365)
+        elif(t_per=="2"):
+            start=end-dt.timedelta(days=30)
+        elif(t_per=="3"):
+            start=end-dt.timedelta(days=365*5)
+        colours=['red','blue','green','black']
+        fig = go.Figure()
+        try:
+            for i in range(0,len(list1)):
+                cryptos_list1+=list1[i]+" "
+                data1 = yf.download(d1[list1[i]],start=start, end=end)
+                data = data1.reset_index()
+                all_data[list1[i]]=list(data['Close'])
+                l1=list(data['Date'])
+                scatter = go.Scatter(x=l1, y=list(data['Close']),
+                        mode='lines', name=list1[i],
+                        opacity=0.8, marker_color=colours[(i+1)%4])
+                fig.add_trace(scatter)
+        except:
+            d=top_bar()
+            d["cryptos_list"]=list(d1)
+            return render(request,'compare_crypto.html',d)
+        fig.update_layout(title=cryptos_list1+"Price Comparison",
+                   xaxis_title='Time',
+                   yaxis_title='Price(in USD)')
+        plot_div = plot(fig, output_type='div')
+        d=top_bar()
+        # print(len(all_data))
+        d["cryptos_list1"]=cryptos_list1+"Price Comparison"
+        d["cryptos_list"]=list(d1)
+        d['data']=all_data
+        # d['cryptos1']=len(all_data)
+        # t23=[]
+        # for i in l1:
+        #     i=str(i)
+        #     t23.append(i[0:10])
+        # d['date_list']=json.dumps(t23)
+        d['plot_div']= plot_div
+        return render(request,'compare_crypto.html',d)
+    else:
+        d=top_bar()
+        d["cryptos_list"]=list(d1)
+        return render(request,'compare_crypto.html',d)

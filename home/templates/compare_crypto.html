@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+$('select').selectpicker();
+</script>
+
+<!-- Themefisher Icon font -->
+    <link rel="stylesheet" href="{% static 'home/plugins/themefisher-font.v-2/style.css' %}">
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="{% static 'home/plugins/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="{% static 'home/plugins/slick-carousel/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'home/plugins/slick-carousel/slick/slick-theme.css' %}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    
+</head>
+<body>
+    {% include 'header.html' %}
+        <div class="row">
+                    <div class="col">
+                        <div class="title text-center">
+                            <h2>Compare CryptoCurrencies Here</h2>
+                            <span class="border"></span>
+                        </div>
+                    </div>
+                </div>
+        <div>
+        <form action="{% url 'compare' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6 col-sm-6"><h6 style="float:right;">Select the CryptoCurrencies</h6></div>
+            <div class="col-lg-6 col-sm-6">
+            <select class="selectpicker" multiple data-live-search="true" name="cryptos">
+            {% for i in cryptos_list %}
+            <option value="{{ i }}">{{i}}</option>
+            {% endfor %}
+            </select>
+            </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+            <div class="col-lg-6 col-sm-6"><h6 style="float:right;">Select the Time Period</h6></div>
+            <div class="col-lg-2 col-sm-2">
+            <select name="t_period" class="form-control">
+            <option value="1">1 Year</option>
+            <option value="2">1 month</option>
+            <option value="3">5 Year</option>
+            </select>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-2 col-sm-2 offset-lg-6 col-4 offset-5" style="margin-top:20px;">
+            <button type="submit" style="float:left;"class="btn btn-primary">Submit</div>
+            </div>
+            </div>
+            </form>
+            </div>
+<div></div>
+{% if data|length > 0  %}
+{% autoescape off %}
+  {{ plot_div }}
+  {% endautoescape %}
+<div class="row" style="margin-top:30px;display:none;">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-header"><center><h2>Compared {{ cryptos_list1 }} Price Prediction</h2></center></div>
+        <div class="card-body">
+          <div id="myPlot" style="width:100%;max-width:700px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--script>
+var xArray = {{ date_list|safe }};
+var data1=[]
+{% for i,j in data.items %}
+var yArray = {{ j|safe }};
+
+// Define Data
+data1.push({
+  x: xArray,
+  y: yArray,
+  mode:"lines",
+  name:"{{ i|safe }}"
+});
+
+{% endfor %}
+
+// Define Layout
+var layout = {
+  xaxis: {title: "Time"},
+  yaxis: {title: "Price in Thousands"},
+  title: "{{ cryptos_list1 }}"
+};
+
+// Display using Plotly
+Plotly.newPlot("myPlot", data1, layout);
+</script-->
+{% endif %}
+<!-- 
+    Essential Scripts
+    =====================================-->
+
+    <!-- Main jQuery -->
+    <script src="{% static 'home/plugins/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'home/plugins/bootstrap/dist/js/popper.min.js' %}"></script>
+    <script src="{% static 'home/plugins/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Owl Carousel -->
+    <script src="{% static 'home/plugins/slick-carousel/slick/slick.min.js' %}"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Smooth Scroll js -->
+    <script src="{% static 'home/plugins/smooth-scroll/dist/js/smooth-scroll.min.js' %}"></script>
+
+    <script src="{% static 'home/js/script.js' %}"></script>
+</body>
+</html>
