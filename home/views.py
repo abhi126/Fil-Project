@@ -177,7 +177,7 @@ def prediction_data(request,name):
     return render(request,'prediction.html',context={"r2_score":r2,"mae":mae,"ac":ac,"pr":pr,"data_list":date_list,"pre":pre,"name":name})
 
 def compare_crypto(request):
-    d1={"Bitcoin":"BTC-USD","Ethereum":"ETH-USD",'Tether':"USDT-USD"}
+    d1={"Bitcoin":"BTC-USD","Ethereum":"ETH-USD",'Binance Coin':"BNB-USD",'Tether':"USDT-USD",'Cardano':"ADA-USD",'XRP':"XRP-USD",'Solana':"SOL1-USD",'Polkadot':"DOT1-USD",'Dogecoin':"DOGE-USD",'USD Coin':"USDC-USD"}
     if request.method=="POST":
         list1=request.POST.getlist('cryptos')
         t_per=request.POST['t_period']
