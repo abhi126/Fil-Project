@@ -28,7 +28,19 @@ crypto_resolver={
                 'USD Coin':['usd','model_usd'],
                 'Solana':['solana','model_solana']
                 }
-                
+cryptocurrency={
+                'Bitcoin':'BTC-USD',
+                'Ethereum':'ETH-USD',
+                'Binance Coin':'BNB-USD',
+                'Tether':'USDT-USD',
+                'Cardano':'ADA-USD',
+                'XRP':'XRP-USD',
+                'Dogecoin':'DOGE-USD',
+                'Polkadot':'DOT1-USD',
+                'USD Coin':'USDC-USD',
+                'Solana':'SOL1-USD'
+
+}
 def cryptoprediction(name):
     if name in list(crypto_resolver):
         k=crypto_resolver[name]
@@ -36,8 +48,8 @@ def cryptoprediction(name):
         # crypto_currency = 'BTC-USD'
         # against_currency = 'INR'
 
-        # start = dt.datetime(2014,1,1)
-        # end = dt.datetime.now()
+        start = dt.datetime(2014,1,1)
+        end = dt.datetime.now()
         #print(start,end)
         #data1 = web.DataReader(f'{crypto_currency}-{against_currency}', 'yahoo', start, end)
         #data1.to_csv("E:\FIL-Project\CryptOS\home\bitc.csv")
@@ -45,10 +57,10 @@ def cryptoprediction(name):
         #data1 = yf.download(crypto_currency,start=start, end=end)
         #data1.to_xlsx('E:\FIL-Project\CryptOS\home\bitc.xlsx')
         # crypto_currency=cryp[t12]
-        # data1 = yf.download(crypto_currency,start=start, end=end)
-        # data1.to_excel('home/'+k[0]+'.xlsx')
-        # t12+=1
-        data1=pd.read_excel('home/'+k[0]+'.xlsx')
+        data1 = yf.download(cryptocurrency[name],start=start, end=end)
+        # # data1.to_excel('home/'+k[0]+'.xlsx')
+        # # t12+=1
+        # data1=pd.read_excel('home/'+k[0]+'.xlsx')
 
 
         data = data1.reset_index()
@@ -78,7 +90,7 @@ def cryptoprediction(name):
         print(x_train.shape[0], x_train.shape[1])
         x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
-        #neural network
+        # #neural network
         # model = Sequential()
 
         # model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
@@ -101,7 +113,7 @@ def cryptoprediction(name):
         # )
 
         # model_json = model.to_json()
-        # print(model_json)
+        # #print(model_json)
         # with open("home/"+k[1]+'.json', "w") as json_file:
         #     json_file.write(model_json)
         # # serialize weights to HDF5
@@ -167,14 +179,14 @@ def cryptoprediction(name):
         # plt.show()
 
         #Predict next day
-        print(len(x_test),len(prediction_prices))
+        #print(len(x_test),len(prediction_prices)) 
         real_data = [model_inputs[len(model_inputs) + 1 -prediction_days: len(model_inputs) + 1, 0]]
         real_data = np.array(real_data)
         real_data = np.reshape(real_data, (real_data.shape[0], real_data.shape[1], 1))
-
-        
         prediction = model.predict(real_data)
         prediction = scaler.inverse_transform(prediction)
+        # pred_list.append(prediction)
+        
         dates=[]
         for i in l1[prediction_days+future_day+1:]:
             i=str(i)
